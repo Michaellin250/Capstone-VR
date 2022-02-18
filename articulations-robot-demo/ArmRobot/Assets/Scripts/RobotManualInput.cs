@@ -35,26 +35,21 @@ public class RobotManualInput : MonoBehaviour
         }
 
         //inputVal = Input.GetAxis("MoveJoint");
-        //Debug.Log("Previous Rotation Is: ");
-        //Debug.Log(handsPreviousRotation);
         Quaternion changeInRotation = handsPreviousRotation * Quaternion.Inverse(handsObject.transform.rotation);
-        //Debug.Log(changeInRotation); 
         inputVal = changeInRotation.z;
+
+        // update state of previous position of hands
+        handsPreviousPosition = handsObject.transform.position;
+        handsPreviousRotation = handsObject.transform.localRotation;
 
         if (Mathf.Abs(inputVal) > 0)
         {
             RotationDirection direction = GetRotationDirection(inputVal);
-
             robotController.RotateJoint(currentJointIndex, direction);
             return;
         }
 
         robotController.StopAllJointRotations();
-
-        // update state of previous position of hands
-        handsPreviousPosition = handsObject.transform.position;
-        Debug.Log(handsObject.transform.localRotation);
-        handsPreviousRotation = handsObject.transform.localRotation;
 
     }
 
