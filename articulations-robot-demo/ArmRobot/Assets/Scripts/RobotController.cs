@@ -14,6 +14,7 @@ public class RobotController : MonoBehaviour
     public Joint[] joints;
 
 
+
     // CONTROL
 
     public void StopAllJointRotations()
@@ -39,7 +40,4 @@ public class RobotController : MonoBehaviour
         ArticulationJointController jointController = robotPart.GetComponent<ArticulationJointController>();
         jointController.rotationState = direction;
     }
-
-
-
 }
