@@ -23,20 +23,20 @@ public class RobotManualInput : MonoBehaviour
     {
         float inputVal = Input.GetAxis("ChangeJoint");
 
-        Vector3 deltaPosition = handsObject.transform.position - handsPreviousPosition;
+        //Vector3 deltaPosition = handsObject.transform.position - handsPreviousPosition;
 
-        if (inputVal > 0 || deltaPosition.y > 0)
+        if (inputVal > 0 /*|| deltaPosition.y > 0*/)
         {
             currentJointIndex = (currentJointIndex + 1) % robotController.joints.Length;
         } 
-        else if(inputVal < 0 || deltaPosition.y < 0)
+        else if(inputVal < 0 /*|| deltaPosition.y < 0*/)
 		{
             currentJointIndex = (currentJointIndex - 1 + robotController.joints.Length) % robotController.joints.Length;
         }
 
-        //inputVal = Input.GetAxis("MoveJoint");
-        Quaternion changeInRotation = handsPreviousRotation * Quaternion.Inverse(handsObject.transform.rotation);
-        inputVal = changeInRotation.z;
+        inputVal = Input.GetAxis("MoveJoint");
+        //Quaternion changeInRotation = handsPreviousRotation * Quaternion.Inverse(handsObject.transform.rotation);
+        //inputVal = changeInRotation.z;
 
         // update state of previous position of hands
         handsPreviousPosition = handsObject.transform.position;
