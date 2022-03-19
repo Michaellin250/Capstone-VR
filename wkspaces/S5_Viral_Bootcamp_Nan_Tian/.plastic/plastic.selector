@@ -1,4 +1,0 @@
-repository "S5_Viral_Bootcamp_Nan_Tian@xrbootcamp@cloud"
-  path "/"
-    br "/main"
-    co "/main"

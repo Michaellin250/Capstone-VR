@@ -1,5 +1,0 @@
-sceneSetups:
-- path: Assets/_VIRAL/01_Scenes/VIRAL_week_4.unity
-  isLoaded: 1
-  isActive: 1
-  isSubScene: 0
