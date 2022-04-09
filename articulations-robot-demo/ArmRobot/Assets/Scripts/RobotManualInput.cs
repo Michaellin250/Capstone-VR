@@ -10,6 +10,7 @@ public class RobotManualInput : MonoBehaviour
     public GameObject handsObject;
     public Vector3 handsPreviousPosition;
     public Quaternion handsPreviousRotation;
+    public Transform cube;
 
     void Start()
 	{
@@ -27,21 +28,26 @@ public class RobotManualInput : MonoBehaviour
 
         if (inputVal > 0 /*|| deltaPosition.y > 0*/)
         {
-            currentJointIndex = (currentJointIndex + 1) % robotController.joints.Length;
+            cube.transform.localPosition += new Vector3(0.1f, 0 , 0);
+            //currentJointIndex = (currentJointIndex + 1) % robotController.joints.Length;
         } 
         else if(inputVal < 0 /*|| deltaPosition.y < 0*/)
 		{
-            currentJointIndex = (currentJointIndex - 1 + robotController.joints.Length) % robotController.joints.Length;
+            cube.transform.localPosition -= new Vector3(0.1f, 0 ,0 );
+            //currentJointIndex = (currentJointIndex - 1 + robotController.joints.Length) % robotController.joints.Length;
         }
 
         inputVal = Input.GetAxis("MoveJoint");
         //Quaternion changeInRotation = handsPreviousRotation * Quaternion.Inverse(handsObject.transform.rotation);
         //inputVal = changeInRotation.z;
 
-        // update state of previous position of hands
-        handsPreviousPosition = handsObject.transform.position;
-        handsPreviousRotation = handsObject.transform.localRotation;
+ 
 
+        // update state of previous position of hands
+        /*handsPreviousPosition = handsObject.transform.position;
+        handsPreviousRotation = handsObject.transform.localRotation;*/
+
+        /*
         if (Mathf.Abs(inputVal) > 0)
         {
             RotationDirection direction = GetRotationDirection(inputVal);
@@ -49,7 +55,7 @@ public class RobotManualInput : MonoBehaviour
             return;
         }
 
-        robotController.StopAllJointRotations();
+        robotController.StopAllJointRotations();*/
 
     }
 

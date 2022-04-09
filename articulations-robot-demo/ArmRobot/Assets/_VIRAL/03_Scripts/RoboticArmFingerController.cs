@@ -26,11 +26,16 @@ public class RoboticArmFingerController : MonoBehaviour
     [SerializeField] private Transform _fingerJointMiddlePart;
     [SerializeField] private Transform _fingerJointTopPart;
 
+    [SerializeField] public Transform _fingerJointMiddlePartPrev;
+
+
     [Space]
     [SerializeField] private Transform _roboticBase;
     [SerializeField] private Transform _roboticJointLowerPart;
     [SerializeField] private Transform _roboticJointMiddlePart;
     [SerializeField] private Transform _roboticJointTopPart;
+    [SerializeField] private Transform _roboticJointTopPart2;
+    [SerializeField] private Transform _roboticJointTopPart3;
     [SerializeField] private Transform _roboticHead;
 
     [SerializeField] private Pincher _pincher;
@@ -41,6 +46,12 @@ public class RoboticArmFingerController : MonoBehaviour
     private RotationLimit _lowerLimitation;
     private RotationLimit _middleLimitation;
     private RotationLimit _topLimitation;
+    private RotationLimit _topLimitation2;
+    private RotationLimit _topLimitation3;
+
+    public GameObject endDefector;
+    public int bounded = 3;
+    public GameObject cube;
 
 
     [Range(0.0f, 1.0f)]
@@ -51,9 +62,22 @@ public class RoboticArmFingerController : MonoBehaviour
     private void Awake()
     {
 
+        //endDefector = GameObject.Find("/GradientDescent/UR3/Base/Shoulder/Elbow/Wrist1/Wrist2/Wrist3/HandE");
+        bounded = 3;
+
+        /*GameObject emptyGO = new GameObject();
+        Transform newTransform = emptyGO.transform;
+
+        _fingerJointMiddlePartPrev = newTransform;*/
+
+        _fingerJointMiddlePartPrev = Instantiate(_fingerJointMiddlePart);
+        Debug.Log("FIRST HAND POSITION: ");
+        Debug.Log(_fingerJointMiddlePartPrev.position);
         _lowerLimitation = _roboticJointLowerPart.GetComponent<RotationLimit>();
         _middleLimitation = _roboticJointMiddlePart.GetComponent<RotationLimit>();
         _topLimitation = _roboticJointTopPart.GetComponent<RotationLimit>();
+        _topLimitation2 = _roboticJointTopPart2.GetComponent<RotationLimit>();
+        _topLimitation3 = _roboticJointTopPart3.GetComponent<RotationLimit>();
     }
 
     private void Update()
@@ -62,7 +86,16 @@ public class RoboticArmFingerController : MonoBehaviour
         // UpdateArmPoseIteration1();
         // UpdateArmPoseIteration2();
         // UpdateArmPoseIteration3();
-        UpdateArmPoseIteration4();
+
+        //Debug.Log("Previous Hand Position");
+        //Debug.Log(_fingerJointMiddlePartPrev.position);
+
+        UpdateArmPoseIteration5();
+        //Debug.Log("Previous Hand Position");
+        //Debug.Log(_fingerJointMiddlePartPrev.position);
+        //_fingerJointLowerPartPrev = _fingerJointLowerPart;
+        //_fingerJointMiddlePartPrev = _fingerJointMiddlePart;
+
     }
 
     private void UpdateArmPoseIteration1()
@@ -77,6 +110,8 @@ public class RoboticArmFingerController : MonoBehaviour
         _roboticJointLowerPart.localRotation = newLowerRotation;
         _roboticJointMiddlePart.transform.localRotation = newMiddleRotation;
         _roboticJointTopPart.transform.localRotation = newTopRotation;
+        _roboticJointTopPart2.transform.localRotation = newTopRotation;
+        _roboticJointTopPart3.transform.localRotation = newTopRotation;
     }
 
     private void UpdateArmPoseIteration2()
@@ -97,6 +132,8 @@ public class RoboticArmFingerController : MonoBehaviour
         _roboticJointLowerPart.localRotation = newLowerRotation;
         _roboticJointMiddlePart.transform.localRotation = newMiddleRotation;
         _roboticJointTopPart.transform.localRotation = newTopRotation;
+        _roboticJointTopPart2.transform.localRotation = newTopRotation;
+        _roboticJointTopPart3.transform.localRotation = newTopRotation;
     }
 
 
@@ -117,7 +154,8 @@ public class RoboticArmFingerController : MonoBehaviour
         _roboticJointLowerPart.localRotation = newLowerRotation;
         _roboticJointMiddlePart.transform.localRotation = newMiddleRotation;
         _roboticJointTopPart.transform.localRotation = newTopRotation;
-
+        _roboticJointTopPart2.transform.localRotation = newTopRotation;
+        _roboticJointTopPart3.transform.localRotation = newTopRotation;
     }
 
     private void UpdateArmPoseIteration4()
@@ -128,13 +166,27 @@ public class RoboticArmFingerController : MonoBehaviour
         var middleRotation = _fingerJointMiddlePart.localRotation.eulerAngles;
         var topRotation = _fingerJointTopPart.localRotation.eulerAngles;
 
+        Debug.Log("Lower Rotation is");
+        Debug.Log(lowerRotation);
+        Debug.Log("Middle Rotation is");
+        Debug.Log(middleRotation);
+        Debug.Log("Top Rotation is");
+        Debug.Log(topRotation);
 
+        // lowerRotation.y - 180 rotates 180 
         var newBaseRotation = Quaternion.Euler(_roboticBase.localRotation.eulerAngles.x, lowerRotation.y - 180, _roboticBase.localRotation.eulerAngles.z);
         var newLowerRotation = Quaternion.Euler(lowerRotation.z + 90, lowerRotation.y, lowerRotation.x);
+        // 90 degrees max on y rotation 
         var newMiddleRotation = Quaternion.Inverse(Quaternion.Euler(middleRotation.z + 30, middleRotation.y - 90, middleRotation.x));
+        //topRotation.z + 30 uses the wrist to rotate
         var newTopRotation = Quaternion.Inverse(Quaternion.Euler(topRotation.x, topRotation.y, topRotation.z + 30));
 
+        var newTopRotation2 = _fingerJointTopPart.localRotation;
+        var newTopRotation3 = Quaternion.Inverse(Quaternion.Euler(topRotation));
 
+
+
+        // settings limits of rotation 
         var limitedLowerRotation = _lowerLimitation.GetLimitedLocalRotation(newLowerRotation, out changed);
         var limitedMiddleRotation = _middleLimitation.GetLimitedLocalRotation(newMiddleRotation, out changed);
         var limitedTopRotation = _topLimitation.GetLimitedLocalRotation(newTopRotation, out changed);
@@ -144,10 +196,91 @@ public class RoboticArmFingerController : MonoBehaviour
 
         _roboticJointMiddlePart.transform.localRotation = Quaternion.Slerp(_roboticJointMiddlePart.localRotation, limitedMiddleRotation, _speed);
         _roboticJointTopPart.transform.localRotation = Quaternion.Slerp(_roboticJointTopPart.localRotation, limitedTopRotation, _speed);
-
+        _roboticJointTopPart2.transform.localRotation = Quaternion.Slerp(_roboticJointTopPart2  .localRotation, limitedTopRotation, _speed);
+        _roboticJointTopPart3.transform.localRotation = Quaternion.Slerp(_roboticJointTopPart3.localRotation, limitedTopRotation, _speed);
+        
         Quaternion rotDown = Quaternion.LookRotation(-Vector3.up, _roboticBase.forward);
         _roboticHead.rotation = rotDown;
     }
+
+    private void UpdateArmPoseIteration5()
+    {
+
+        /*
+        
+        Debug.Log("Printing Middle Position");
+        Debug.Log(_fingerJointMiddlePart.localPosition);
+
+        var deltaPosition = _fingerJointMiddlePart.localPosition - _fingerJointMiddlePartPrev.localPosition;
+        Debug.Log("Printing Delta Middle Position");
+        Debug.Log(deltaPosition);
+
+
+        Debug.Log("Printing End Defector Position Before");
+        Debug.Log(endDefector.transform.localPosition);
+        Debug.Log("Printing End Defector Position After");
+        endDefector.transform.localPosition += deltaPosition;
+        //Debug.Log(endDefector.transform.localPosition);
+        //endDefector.transform.localPosition += new Vector3(5, 0, 0);
+        Debug.Log(endDefector.transform.localPosition);*/
+
+        var lowerRotation = _wristBase.localRotation.eulerAngles;
+        var middleRotation = _fingerJointMiddlePart.localRotation.eulerAngles;
+        var topRotation = _fingerJointTopPart.localRotation.eulerAngles;
+
+        var changed = false;
+
+        //Debug.Log("CURRENT POSITION OF HAND: ");
+        //Debug.Log(_fingerJointMiddlePart.position);
+
+        var deltaPosition = _fingerJointMiddlePart.position - _fingerJointMiddlePartPrev.position;
+
+
+
+
+        // lowerRotation.y - 180 rotates 180 
+        var newBaseRotation = Quaternion.Euler(_roboticBase.localRotation.eulerAngles.x, lowerRotation.y, _roboticBase.localRotation.eulerAngles.z);
+
+        // 90 degrees max on y rotation 
+        var newMiddleRotation = Quaternion.Inverse(Quaternion.Euler(middleRotation.z, middleRotation.y, middleRotation.x));
+
+
+        // settings limits of rotation 
+        var limitedMiddleRotation = _middleLimitation.GetLimitedLocalRotation(newMiddleRotation, out changed);
+
+        //_roboticBase.localRotation = Quaternion.Slerp(_roboticBase.localRotation, newBaseRotation, _speed);
+        endDefector.transform.localRotation = Quaternion.Slerp(endDefector.transform.localRotation, newMiddleRotation, _speed);
+
+
+        Debug.Log("PRINTING DELTA POSITION");
+        Debug.Log(deltaPosition);
+
+        /*
+        if (Mathf.Abs(deltaPosition.x) > bounded || Mathf.Abs(deltaPosition.y) > bounded || Mathf.Abs(deltaPosition.z) > bounded)
+        {
+            return;
+        }*/
+
+        if (Mathf.Abs(Mathf.Sqrt((deltaPosition.x * deltaPosition.x) + (deltaPosition.y * deltaPosition.y) + (deltaPosition.z * deltaPosition.z))) > bounded)
+        {
+            return;
+        }
+
+        /*if (Mathf.Abs(deltaPosition.x) <= bounded || Mathf.Abs(deltaPosition.y) <= bounded || Mathf.Abs(deltaPosition.z) <= bounded)
+        {
+            endDefector.transform.localPosition += deltaPosition;
+        }*/
+
+        if (deltaPosition.x < 0){
+            cube.transform.localPosition -= new Vector3(0.1f / 1000, 0, 0);
+        } else {
+            cube.transform.localPosition += new Vector3(0.1f / 1000, 0, 0);
+        }
+
+     
+        //endDefector.transform.localPosition += deltaPosition;
+    }
+
 
 
 

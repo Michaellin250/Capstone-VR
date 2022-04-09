@@ -50,7 +50,7 @@ namespace _VIRAL._03_Scripts
 		[SerializeField] private Transform _pincherRightTarget;
 		
 		[Space]
-		[SerializeField] private ViralSettings _viralSettings;
+		//[SerializeField] private ViralSettings _viralSettings;
 
 		// Robot Settings
 		[Space]
@@ -165,30 +165,35 @@ namespace _VIRAL._03_Scripts
 			DrawLaser(false);
 			_checkRobotAutomaticMovement = Observable.Interval(TimeSpan.FromSeconds(0.1f)).Subscribe(_ =>
 			{
+
+				/*
 				if (!_viralSettings.EngineerModeActive.Value && !Manual.Value)
 				{
 					HandleAutomaticMovement();
-				}
+				}*/
 			}).AddTo(this);
 
 			_checkCaptureZone = Observable.Interval(TimeSpan.FromSeconds(0.5f)).Subscribe(t =>
 			{
+				/*
 				if (!_viralSettings.EngineerModeActive.Value)
 				{
 					CheckCaptureZone();
-				}
+				}*/
 			}).AddTo(this);
 		}
 
 		private void CheckMode()
 		{
+
+			/*
 			_viralSettings.EngineerModeActive.Subscribe(active =>
 			{
 				if (active)
 				{
 					Abort();
 				}
-			});
+			});*/
 		}
 		
 		private void CheckMouthState()
@@ -604,7 +609,7 @@ namespace _VIRAL._03_Scripts
 		private void HandleManualMovement()
 		{
 			// cannot move in engineer mode
-			if (_viralSettings.EngineerModeActive.Value) return;
+			//if (_viralSettings.EngineerModeActive.Value) return;
 			
 			// if controls touched => go to manual mode
 			if (!Manual.Value)
