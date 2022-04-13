@@ -23,21 +23,24 @@ public class RobotManualInput : MonoBehaviour
 
     void Update()
     {
+
+        /* pressing W, D or Up and Down Arrow Keys */
         float inputVal = Input.GetAxis("ChangeJoint");
 
         //Vector3 deltaPosition = handsObject.transform.position - handsPreviousPosition;
 
         if (inputVal > 0 /*|| deltaPosition.y > 0*/)
         {
-            cube.transform.localPosition += new Vector3(0.1f, 0 , 0);
+            cube.transform.localPosition += new Vector3(0.1f / offSetMovement, 0 , 0);
             //currentJointIndex = (currentJointIndex + 1) % robotController.joints.Length;
         } 
         else if(inputVal < 0 /*|| deltaPosition.y < 0*/)
 		{
-            cube.transform.localPosition -= new Vector3(0.1f, 0 ,0 );
+            cube.transform.localPosition -= new Vector3(0.1f / offSetMovement, 0 ,0 );
             //currentJointIndex = (currentJointIndex - 1 + robotController.joints.Length) % robotController.joints.Length;
         }
 
+        /* Press A and D arrow Keys */
         inputVal = Input.GetAxis("MoveJoint");
         //Quaternion changeInRotation = handsPreviousRotation * Quaternion.Inverse(handsObject.transform.rotation);
         //inputVal = changeInRotation.z;

@@ -187,8 +187,9 @@ MonoBehaviour:
   _roboticHead: {fileID: 89354621}
   _pincher: {fileID: 1830307902}
   endDefector: {fileID: 995377197}
-  bounded: 1
+  bounded: 4
   cube: {fileID: 1383161865}
+  cubeScaleFactor: 10
   _speed: 0.1
 --- !u!4 &89354621 stripped
 Transform:
@@ -5522,7 +5523,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 719116676}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5bd7d63ca21545db8bd466915d216661, type: 3}
   m_Name: 
@@ -7114,9 +7115,8 @@ MonoBehaviour:
   currentJointIndex: 0
   robotController: {fileID: 1442213768}
   handsObject: {fileID: 1412052456}
-  handsPreviousPosition: {x: 0, y: 0, z: 0}
-  handsPreviousRotation: {x: 0, y: 0, z: 0, w: 0}
   cube: {fileID: 1383161871}
+  offSetMovement: 10
 --- !u!1 &1586742354
 GameObject:
   m_ObjectHideFlags: 0

@@ -50,8 +50,9 @@ public class RoboticArmFingerController : MonoBehaviour
     private RotationLimit _topLimitation3;
 
     public GameObject endDefector;
-    public int bounded = 3;
+    public int bounded;
     public GameObject cube;
+    public int cubeScaleFactor;
 
 
     [Range(0.0f, 1.0f)]
@@ -63,7 +64,6 @@ public class RoboticArmFingerController : MonoBehaviour
     {
 
         //endDefector = GameObject.Find("/GradientDescent/UR3/Base/Shoulder/Elbow/Wrist1/Wrist2/Wrist3/HandE");
-        bounded = 3;
 
         /*GameObject emptyGO = new GameObject();
         Transform newTransform = emptyGO.transform;
@@ -252,8 +252,8 @@ public class RoboticArmFingerController : MonoBehaviour
         endDefector.transform.localRotation = Quaternion.Slerp(endDefector.transform.localRotation, newMiddleRotation, _speed);
 
 
-        Debug.Log("PRINTING DELTA POSITION");
-        Debug.Log(deltaPosition);
+        //Debug.Log("PRINTING DELTA POSITION");
+        //Debug.Log(deltaPosition);
 
         /*
         if (Mathf.Abs(deltaPosition.x) > bounded || Mathf.Abs(deltaPosition.y) > bounded || Mathf.Abs(deltaPosition.z) > bounded)
@@ -261,7 +261,11 @@ public class RoboticArmFingerController : MonoBehaviour
             return;
         }*/
 
-        if (Mathf.Abs(Mathf.Sqrt((deltaPosition.x * deltaPosition.x) + (deltaPosition.y * deltaPosition.y) + (deltaPosition.z * deltaPosition.z))) > bounded)
+        float deltaDistance = Mathf.Sqrt((deltaPosition.x * deltaPosition.x) + (deltaPosition.y * deltaPosition.y) + (deltaPosition.z * deltaPosition.z));
+        Debug.Log("PRINTING DELTA DISTANCE");
+        Debug.Log(deltaDistance);
+
+        if (Mathf.Abs(deltaDistance) > bounded)
         {
             return;
         }
@@ -271,10 +275,13 @@ public class RoboticArmFingerController : MonoBehaviour
             endDefector.transform.localPosition += deltaPosition;
         }*/
 
+        Debug.Log("PRINTING DELTA POSITION");
+        Debug.Log(deltaPosition);
+
         if (deltaPosition.x < 0){
-            cube.transform.localPosition -= new Vector3(0.1f / 1000, 0, 0);
+            cube.transform.localPosition -= new Vector3(0.1f / cubeScaleFactor, 0, 0);
         } else {
-            cube.transform.localPosition += new Vector3(0.1f / 1000, 0, 0);
+            cube.transform.localPosition += new Vector3(0.1f / cubeScaleFactor, 0, 0);
         }
 
      
