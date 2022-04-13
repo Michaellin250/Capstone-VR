@@ -8,16 +8,17 @@ public class RobotManualInput : MonoBehaviour
     public int currentJointIndex;
     public CustomController robotController;
     public GameObject handsObject;
-    public Vector3 handsPreviousPosition;
-    public Quaternion handsPreviousRotation;
+   // public Vector3 handsPreviousPosition;
+    //public Quaternion handsPreviousRotation;
     public Transform cube;
+    public int offSetMovement;
 
     void Start()
 	{
         currentJointIndex = 0;
         robotController = robot.GetComponent<CustomController>();
-        handsPreviousPosition = handsObject.transform.position;
-        handsPreviousRotation = handsObject.transform.localRotation;
+        //handsPreviousPosition = handsObject.transform.position;
+        //handsPreviousRotation = handsObject.transform.localRotation;
     }
 
     void Update()
