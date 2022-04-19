@@ -26,8 +26,11 @@ public class RoboticArmFingerController : MonoBehaviour
     [SerializeField] private Transform _fingerJointMiddlePart;
     [SerializeField] private Transform _fingerJointTopPart;
 
-    [SerializeField] public Transform _fingerJointMiddlePartPrev;
+    //[SerializeField] public Transform _fingerJointMiddlePartPrev;
 
+
+    public Vector3 handsPreviousPosition;
+    public GameObject handsObject;
 
     [Space]
     [SerializeField] private Transform _roboticBase;
@@ -64,21 +67,22 @@ public class RoboticArmFingerController : MonoBehaviour
     {
 
         //endDefector = GameObject.Find("/GradientDescent/UR3/Base/Shoulder/Elbow/Wrist1/Wrist2/Wrist3/HandE");
+        
+        //_fingerJointMiddlePartPrev = Instantiate(_fingerJointMiddlePart);
+     
 
-        /*GameObject emptyGO = new GameObject();
-        Transform newTransform = emptyGO.transform;
-
-        _fingerJointMiddlePartPrev = newTransform;*/
-
-        _fingerJointMiddlePartPrev = Instantiate(_fingerJointMiddlePart);
-        Debug.Log("FIRST HAND POSITION: ");
-        Debug.Log(_fingerJointMiddlePartPrev.position);
         _lowerLimitation = _roboticJointLowerPart.GetComponent<RotationLimit>();
         _middleLimitation = _roboticJointMiddlePart.GetComponent<RotationLimit>();
         _topLimitation = _roboticJointTopPart.GetComponent<RotationLimit>();
         _topLimitation2 = _roboticJointTopPart2.GetComponent<RotationLimit>();
         _topLimitation3 = _roboticJointTopPart3.GetComponent<RotationLimit>();
     }
+
+    void Start()
+    {
+        handsPreviousPosition = handsObject.transform.position;
+    }
+
 
     private void Update()
     {
@@ -91,11 +95,12 @@ public class RoboticArmFingerController : MonoBehaviour
         //Debug.Log(_fingerJointMiddlePartPrev.position);
 
         UpdateArmPoseIteration5();
-        //Debug.Log("Previous Hand Position");
-        //Debug.Log(_fingerJointMiddlePartPrev.position);
-        //_fingerJointLowerPartPrev = _fingerJointLowerPart;
-        //_fingerJointMiddlePartPrev = _fingerJointMiddlePart;
 
+        //handsPreviousPosition = _fingerJointMiddlePart.localPosition;
+
+        handsPreviousPosition = handsObject.transform.position;
+        Debug.Log("Previous Hand Position");
+        Debug.Log(handsPreviousPosition);
     }
 
     private void UpdateArmPoseIteration1()
@@ -230,14 +235,6 @@ public class RoboticArmFingerController : MonoBehaviour
 
         var changed = false;
 
-        //Debug.Log("CURRENT POSITION OF HAND: ");
-        //Debug.Log(_fingerJointMiddlePart.position);
-
-        var deltaPosition = _fingerJointMiddlePart.position - _fingerJointMiddlePartPrev.position;
-
-
-
-
         // lowerRotation.y - 180 rotates 180 
         var newBaseRotation = Quaternion.Euler(_roboticBase.localRotation.eulerAngles.x, lowerRotation.y, _roboticBase.localRotation.eulerAngles.z);
 
@@ -251,9 +248,15 @@ public class RoboticArmFingerController : MonoBehaviour
         //_roboticBase.localRotation = Quaternion.Slerp(_roboticBase.localRotation, newBaseRotation, _speed);
         endDefector.transform.localRotation = Quaternion.Slerp(endDefector.transform.localRotation, newMiddleRotation, _speed);
 
+        //Debug.Log("CURRENT POSITION OF HAND: ");
+        //Debug.Log(_fingerJointMiddlePart.position);
 
-        //Debug.Log("PRINTING DELTA POSITION");
-        //Debug.Log(deltaPosition);
+
+
+        // Working one currently for X position
+        // Vector3 deltaPosition = _fingerJointMiddlePart.position - handsPreviousPosition;
+
+        Vector3 deltaPosition = handsObject.transform.position - handsPreviousPosition;
 
         /*
         if (Mathf.Abs(deltaPosition.x) > bounded || Mathf.Abs(deltaPosition.y) > bounded || Mathf.Abs(deltaPosition.z) > bounded)
@@ -262,8 +265,8 @@ public class RoboticArmFingerController : MonoBehaviour
         }*/
 
         float deltaDistance = Mathf.Sqrt((deltaPosition.x * deltaPosition.x) + (deltaPosition.y * deltaPosition.y) + (deltaPosition.z * deltaPosition.z));
-        Debug.Log("PRINTING DELTA DISTANCE");
-        Debug.Log(deltaDistance);
+        /*Debug.Log("PRINTING DELTA DISTANCE");
+        Debug.Log(deltaDistance);*/
 
         if (Mathf.Abs(deltaDistance) > bounded)
         {
@@ -278,13 +281,27 @@ public class RoboticArmFingerController : MonoBehaviour
         Debug.Log("PRINTING DELTA POSITION");
         Debug.Log(deltaPosition);
 
+        
         if (deltaPosition.x < 0){
             cube.transform.localPosition -= new Vector3(0.1f / cubeScaleFactor, 0, 0);
         } else {
             cube.transform.localPosition += new Vector3(0.1f / cubeScaleFactor, 0, 0);
         }
 
-     
+        /*
+        if (deltaPosition.y < 0) {
+            cube.transform.localPosition -= new Vector3(0, 0.1f / cubeScaleFactor, 0);
+        } else {
+            cube.transform.localPosition += new Vector3(0, 0.1f / cubeScaleFactor, 0);
+        }*/
+
+        
+        if (deltaPosition.z < 0) {
+            cube.transform.localPosition -= new Vector3(0, 0, 0.1f / cubeScaleFactor);
+        } else {
+            cube.transform.localPosition += new Vector3(0, 0, 0.1f / cubeScaleFactor);
+        }
+
         //endDefector.transform.localPosition += deltaPosition;
     }
 
