@@ -289,9 +289,9 @@ ArticulationBody:
   serializedVersion: 2
   m_Mass: 1
   m_ParentAnchorPosition: {x: 0, y: 0.06584513, z: -0.0643453}
-  m_ParentAnchorRotation: {x: 0.49999997, y: -0.49999997, z: -0.49999997, w: -0.49999997}
+  m_ParentAnchorRotation: {x: 0, y: 0, z: 0, w: 1}
   m_AnchorPosition: {x: 0, y: 0, z: 0}
-  m_AnchorRotation: {x: 0.49999997, y: -0.49999997, z: -0.49999997, w: -0.49999997}
+  m_AnchorRotation: {x: 0, y: 0, z: 0, w: 1}
   m_ComputeParentAnchor: 1
   m_ArticulationJointType: 2
   m_LinearX: 0
@@ -351,16 +351,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 385129266}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 484718f2c4ab849829491782b508958a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axis: {x: 1, y: 0, z: 0}
+  axis: {x: 0, y: 0, z: 1}
   defaultLocalRotation: {x: -0, y: -0, z: -0, w: 1}
   useLimits: 1
-  min: -90
-  max: 90
+  min: -180
+  max: 180
   zeroAxisDisplayOffset: 90
 --- !u!64 &385129271
 MeshCollider:
@@ -5310,6 +5310,7 @@ GameObject:
   - component: {fileID: 622386704}
   - component: {fileID: 622386703}
   - component: {fileID: 622386705}
+  - component: {fileID: 622386710}
   m_Layer: 0
   m_Name: Wrist3
   m_TagString: Untagged
@@ -5395,7 +5396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea3d85c88b17438eb2fe8de6c3f192ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _axis: {x: 0, y: 0, z: 1}
+  _axis: {x: 0, y: 1, z: 0}
 --- !u!64 &622386706
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5478,6 +5479,24 @@ Transform:
   m_Father: {fileID: 1207038285}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &622386710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622386702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 484718f2c4ab849829491782b508958a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  axis: {x: 0, y: 1, z: 0}
+  defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+  useLimits: 1
+  min: -180
+  max: 180
+  zeroAxisDisplayOffset: 0
 --- !u!4 &695907021 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3912713320684774683, guid: a75cb6d180175194c8437022a94b59cd,
@@ -5530,9 +5549,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _delta: 1
-  _learningRate: 30
+  _learningRate: 30.06
   _target: {fileID: 1383161871}
-  _distanceThreshold: 0.01
+  _distanceThreshold: 0.53
   _automaticUpdate: 1
   _maxIterations: 1000
 --- !u!4 &774185659 stripped
@@ -5688,7 +5707,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 948141744}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 484718f2c4ab849829491782b508958a, type: 3}
   m_Name: 
@@ -5696,8 +5715,8 @@ MonoBehaviour:
   axis: {x: 0, y: 0, z: 1}
   defaultLocalRotation: {x: -0, y: -0, z: -0, w: 1}
   useLimits: 1
-  min: -90
-  max: 90
+  min: -180
+  max: 180
   zeroAxisDisplayOffset: 0
 --- !u!64 &948141749
 MeshCollider:
@@ -5997,7 +6016,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 995377197}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 484718f2c4ab849829491782b508958a, type: 3}
   m_Name: 
@@ -6223,7 +6242,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1089875216}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 484718f2c4ab849829491782b508958a, type: 3}
   m_Name: 
@@ -6231,8 +6250,8 @@ MonoBehaviour:
   axis: {x: 0, y: 1, z: 0}
   defaultLocalRotation: {x: -0, y: -0, z: -0, w: 1}
   useLimits: 0
-  min: -45
-  max: 90
+  min: -180
+  max: 180
   zeroAxisDisplayOffset: 0
 --- !u!64 &1089875221
 MeshCollider:
@@ -6313,7 +6332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea3d85c88b17438eb2fe8de6c3f192ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _axis: {x: 0, y: 0, z: 1}
+  _axis: {x: 0, y: 1, z: 0}
 --- !u!4 &1108309507 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3914542422572126700, guid: a75cb6d180175194c8437022a94b59cd,
@@ -6439,6 +6458,7 @@ GameObject:
   - component: {fileID: 1207038284}
   - component: {fileID: 1207038286}
   - component: {fileID: 1207038287}
+  - component: {fileID: 1207038291}
   m_Layer: 0
   m_Name: Wrist2
   m_TagString: Untagged
@@ -6606,6 +6626,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1207038283}
   m_Mesh: {fileID: 8277753648479351336, guid: 583fc14d55e195d4db06bf5785fd6fa6, type: 3}
+--- !u!114 &1207038291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207038283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 484718f2c4ab849829491782b508958a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  axis: {x: 0, y: 0, z: 1}
+  defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+  useLimits: 1
+  min: -180
+  max: 180
+  zeroAxisDisplayOffset: 0
 --- !u!4 &1228186337 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3914304388275192398, guid: a75cb6d180175194c8437022a94b59cd,
@@ -7744,16 +7782,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2127710631}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 484718f2c4ab849829491782b508958a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axis: {x: 0, y: 0, z: 1}
+  axis: {x: 0, y: 1, z: 0}
   defaultLocalRotation: {x: -0, y: -0, z: -0, w: 1}
   useLimits: 1
-  min: -90
-  max: 60
+  min: -180
+  max: 180
   zeroAxisDisplayOffset: 0
 --- !u!64 &2127710636
 MeshCollider:
@@ -7834,7 +7872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea3d85c88b17438eb2fe8de6c3f192ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _axis: {x: 0, y: 0, z: 1}
+  _axis: {x: 0, y: 1, z: 0}
 --- !u!4 &2131439046 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3914699590653883437, guid: a75cb6d180175194c8437022a94b59cd,

@@ -45,7 +45,17 @@ public class RobotManualInput : MonoBehaviour
         //Quaternion changeInRotation = handsPreviousRotation * Quaternion.Inverse(handsObject.transform.rotation);
         //inputVal = changeInRotation.z;
 
- 
+        if (inputVal > 0 /*|| deltaPosition.y > 0*/)
+        {
+            cube.transform.localPosition += new Vector3(0, 0, 0.1f / offSetMovement);
+            //currentJointIndex = (currentJointIndex + 1) % robotController.joints.Length;
+        }
+        else if (inputVal < 0 /*|| deltaPosition.y < 0*/)
+        {
+            cube.transform.localPosition -= new Vector3(0, 0, 0.1f / offSetMovement);
+            //currentJointIndex = (currentJointIndex - 1 + robotController.joints.Length) % robotController.joints.Length;
+        }
+
 
         // update state of previous position of hands
         /*handsPreviousPosition = handsObject.transform.position;
